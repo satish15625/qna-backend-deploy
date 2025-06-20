@@ -1,4 +1,3 @@
-# ---- rag_pipeline.py ----
 import os
 import json
 import time
@@ -13,7 +12,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 class RAGPipeline:
-    def __init__(self, embedding_model: str = "all-MiniLM-L6-v2"):
+    def __init__(self, embedding_model: str = "all-MiniLM-L6-v2", ollama_model: str = "mistral"):
+        self.ollama_model = ollama_model
         self.embedder = SentenceTransformer(embedding_model)
 
         # ✅ Persistent vector store with Chroma
@@ -98,7 +98,6 @@ class RAGPipeline:
         except Exception:
             return []
 
-
     def generate_answer(self, query: str) -> str:
         start_time = time.time()
 
@@ -120,7 +119,7 @@ class RAGPipeline:
         )
 
         response = ollama.chat(
-            model="mistral",
+            model=self.ollama_model,
             messages=[{"role": "user", "content": prompt}],
             options={"num_predict": 128}  # Faster response
         )
