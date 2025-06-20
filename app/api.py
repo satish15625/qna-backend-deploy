@@ -14,14 +14,14 @@ load_dotenv()
 # Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS (Allow frontend to talk to backend)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Replace with specific domain in production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# # Enable CORS (Allow frontend to talk to backend)
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],  # Replace with specific domain in production
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
 
 # Initialize RAGPipeline using environment-configured models
 rag_pipeline = RAGPipeline(
