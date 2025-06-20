@@ -1,15 +1,21 @@
 # File: app/main.py
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app import api  # api.py contains FastAPI instance
+# from fastapi.middleware.cors import CORSMiddleware
+# from app import api  # api.py contains FastAPI instance
 
-app = api.app  # import the existing app
+# app = api.app  # import the existing app
 
-# Enable CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the RAG API!"}
+
+# # Enable CORS
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=["*"],
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
