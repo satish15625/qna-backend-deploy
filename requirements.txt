@@ -1,9 +1,9 @@
 fastapi
-uvicorn
-sentence-transformers
-chromadb
-numpy
-scikit-learn
-requests
-PyMuPDF
-ollama
+# uvicorn
+# sentence-transformers
+# chromadb
+# numpy
+# scikit-learn
+# requests
+# PyMuPDF
+# ollama
