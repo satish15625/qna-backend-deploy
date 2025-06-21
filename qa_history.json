@@ -13,5 +13,75 @@
     "question": "What is python?",
     "answer": "Python is a programming language used primarily for scripting and software development purposes. It supports multiple programming paradigms, including procedural, object-oriented, and functional programming. The syntax of the language emphasizes readability and reduced possibility of error. Python is known for its simplicity and versatility, making it an excellent choice for beginners as well as experienced programmers.",
     "timestamp": "2025-06-20 23:28:52"
+  },
+  {
+    "question": "Unable to login",
+    "answer": "I'm sorry for any inconvenience, but I cannot help you with the issue of being unable to log in as there is no specific information provided about the service or system you are trying to access in the uploaded documents. If it's a common issue, you can try checking if your login credentials are correct and if the service is currently available. If the problem persists, please contact the appropriate support team for assistance.",
+    "timestamp": "2025-06-20 23:42:30"
+  },
+  {
+    "question": "Hi",
+    "answer": "Hello! How can I help you today?",
+    "timestamp": "2025-06-21 07:02:57"
+  },
+  {
+    "question": "what is the date today?",
+    "answer": "Answer not found in uploaded documents. (The context provided does not contain any information about the current date.)",
+    "timestamp": "2025-06-21 07:03:22"
+  },
+  {
+    "question": "can you give me some information about last ingested pdf?",
+    "answer": "I'm sorry for any confusion, but the context provided does not contain information about the last ingested PDF. Therefore, I am unable to provide specific details about it.",
+    "timestamp": "2025-06-21 07:05:05"
+  },
+  {
+    "question": "What is ai?",
+    "answer": "The provided context does not provide any definition or explanation of AI (Artificial Intelligence). Therefore, I cannot answer this question based on the given context.",
+    "timestamp": "2025-06-21 07:20:49"
+  },
+  {
+    "question": "RAG-based AI Assistant for Oil & Gas Field Engineers?",
+    "answer": "The context provided does not contain any information about an RAG-based AI Assistant for Oil & Gas Field Engineers. Therefore, the answer would be 'Answer not found in uploaded documents.'",
+    "timestamp": "2025-06-21 07:26:30"
+  },
+  {
+    "question": "what is RAG?",
+    "answer": "Answer not found in the uploaded documents. It seems like 'RAG' is not defined or mentioned in the provided context.",
+    "timestamp": "2025-06-21 07:27:12"
+  },
+  {
+    "question": "What is Java?",
+    "answer": "Java is a programming language that is class-based, object-oriented, and designed to have as few implementation dependencies as possible. It is intended to let application developers write once, run anywhere (WORA), meaning that compiled Java code can run on all platforms without the need for recompilation.",
+    "timestamp": "2025-06-21 07:28:23"
+  },
+  {
+    "question": "What is Docker?",
+    "answer": "Docker is a platform used to automate the deployment, scaling, and management of applications inside containers. It provides a standardized way to package an application with all its dependencies into a single unit called a container, which can then run consistently across different environments.",
+    "timestamp": "2025-06-21 07:29:03"
+  },
+  {
+    "question": "Mode of Request",
+    "answer": "The mode of request is not specified in the provided context.",
+    "timestamp": "2025-06-21 07:51:55"
+  },
+  {
+    "question": "How to create python first program",
+    "answer": "In the provided context, there is no explicit code example for creating a Python first program. However, a common way to start writing a simple Python program is by using a print statement, as shown below:\n\n```python\nprint(\"Hello, World!\")\n```\n\nSave this code in a file with .py extension (e.g., hello_world.py) and run it using Python interpreter.",
+    "timestamp": "2025-06-21 10:22:41"
+  },
+  {
+    "question": "HCL compensation ",
+    "answer": "The provided context does not contain any information about HCL compensation, so the answer would be 'Answer not found in uploaded documents.'",
+    "timestamp": "2025-06-21 10:27:24"
+  },
+  {
+    "question": "4. What considerations do you take when choosing between traditional ML and deep learning models?",
+    "answer": "The choice between traditional Machine Learning (ML) and Deep Learning models depends on several factors. One significant consideration is the nature of the data available. If the data is structured, has a clear and simple pattern, and involves less uncertainty, then traditional ML might be more appropriate. However, if the data is unstructured, complex, or involves high degrees of ambiguity, deep learning models, particularly neural networks, may yield better results due to their ability to learn complex patterns from large amounts of data.\n\nAnother important factor is computational resources. Deep learning models often require significant computational power and large amounts of training data,",
+    "timestamp": "2025-06-21 10:30:00"
+  },
+  {
+    "question": "Complex AI",
+    "answer": "The provided context does not contain any information about complex AI. Answer not found in uploaded documents.",
+    "timestamp": "2025-06-21 10:31:32"
   }
 ]
