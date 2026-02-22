@@ -3,7 +3,8 @@ from fastapi import FastAPI, HTTPException, File, UploadFile, Form
 from pydantic import BaseModel, HttpUrl
 from typing import Optional
 from .rag_pipeline import RAGPipeline
-import shutil
+import os
+import tempfile
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -31,15 +32,22 @@ def ingest_pdf(
 ):
     try:
         if pdf_url:
-            rag_pipeline.load_pdf_from_url(str(pdf_url))
-            return {"status": "PDF content ingested from URL successfully"}
+            result = rag_pipeline.load_pdf_from_url(str(pdf_url))
+            return {"status": "ok", "ingestion": result}
 
         elif file:
-            file_location = f"./temp_upload.pdf"
-            with open(file_location, "wb") as buffer:
-                shutil.copyfileobj(file.file, buffer)
-            rag_pipeline.load_pdf(file_location)
-            return {"status": "PDF content ingested from file successfully"}
+            suffix = os.path.splitext(file.filename or "upload.pdf")[1] or ".pdf"
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp_file:
+                tmp_file.write(file.file.read())
+                file_location = tmp_file.name
+
+            try:
+                result = rag_pipeline.load_pdf(file_location)
+            finally:
+                if os.path.exists(file_location):
+                    os.remove(file_location)
+
+            return {"status": "ok", "ingestion": result}
 
         else:
             raise HTTPException(status_code=400, detail="No file or URL provided")
