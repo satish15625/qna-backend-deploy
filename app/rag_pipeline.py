@@ -1,7 +1,9 @@
 import os
 import json
 import time
-from typing import List, Tuple
+import hashlib
+import tempfile
+from typing import List
 from sentence_transformers import SentenceTransformer
 import ollama
 import fitz  # PyMuPDF
@@ -42,20 +44,34 @@ class RAGPipeline:
         words = text.split()
         return [' '.join(words[i:i+max_chunk_len]) for i in range(0, len(words), max_chunk_len)]
 
-    def _generate_and_store_embeddings(self, chunks: List[str]):
-        embeddings = self.embedder.encode(chunks)
-        for i, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
-            self.collection.add(
-                documents=[chunk],
-                embeddings=[embedding.tolist()],
-                ids=[f"doc_{len(self.collection.get()['ids']) + i}"]
-            )
+    def _source_exists(self, source_name: str) -> bool:
+        results = self.collection.get(where={"source": source_name}, limit=1)
+        return bool(results.get("ids"))
 
-    def load_pdf(self, pdf_path: str):
+    def _build_source_name(self, pdf_path: str, file_bytes: bytes) -> str:
+        digest = hashlib.sha256(file_bytes).hexdigest()[:12]
+        base_name = os.path.basename(pdf_path)
+        return f"{base_name}-{digest}"
+
+    def load_pdf(self, pdf_path: str) -> dict:
+        with open(pdf_path, "rb") as pdf_file:
+            file_bytes = pdf_file.read()
+
+        source_name = self._build_source_name(pdf_path, file_bytes)
+        if self._source_exists(source_name):
+            return {
+                "source": source_name,
+                "chunks_added": 0,
+                "status": "skipped",
+                "reason": "Document already ingested",
+            }
+
         doc = fitz.open(pdf_path)
         all_text = "\n".join([page.get_text() for page in doc if page.get_text().strip()])
+        if not all_text.strip():
+            raise ValueError("No readable text found in the PDF")
+
         chunks = self._chunk_pdf(all_text)
-        source_name = os.path.basename(pdf_path)
 
         for i, chunk in enumerate(chunks):
             self.collection.add(
@@ -64,15 +80,26 @@ class RAGPipeline:
                 metadatas=[{"source": source_name}]
             )
 
-    def load_pdf_from_url(self, pdf_url: str):
-        response = requests.get(pdf_url)
+        return {
+            "source": source_name,
+            "chunks_added": len(chunks),
+            "status": "ingested",
+        }
+
+    def load_pdf_from_url(self, pdf_url: str) -> dict:
+        response = requests.get(pdf_url, timeout=30)
         if response.status_code == 200:
-            pdf_path = "./temp.pdf"
-            with open(pdf_path, "wb") as f:
-                f.write(response.content)
-            self.load_pdf(pdf_path)
-        else:
-            raise Exception("Failed to download PDF from URL")
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                tmp_file.write(response.content)
+                pdf_path = tmp_file.name
+
+            try:
+                return self.load_pdf(pdf_path)
+            finally:
+                if os.path.exists(pdf_path):
+                    os.remove(pdf_path)
+
+        raise Exception("Failed to download PDF from URL")
 
     def retrieve(self, query: str, top_k: int = 3, sources: List[str] = None) -> List[str]:
         try:
